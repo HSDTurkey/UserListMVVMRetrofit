@@ -1,5 +1,7 @@
 package com.hdsturkey.yalovabsm404
 
+import android.content.Context
+import android.widget.Toast
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.app.AppCompatActivity
@@ -19,5 +21,8 @@ class MainActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
+    fun Context.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
+        Toast.makeText(this, message, length).show()
+    }
 
 }
