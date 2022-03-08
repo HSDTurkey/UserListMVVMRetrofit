@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/menu_delete"
+        android:icon="@android:drawable/ic_menu_delete"
+        android:title="Delete"
+        app:showAsAction="always"
+        />
+
+    <item android:id="@+id/menu_edit"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Edit"
+        app:showAsAction="always">
+    </item>
+
+    <item android:id="@+id/menu_add"
+        android:icon="@android:drawable/ic_menu_add"
+        android:title="Add"
+        app:showAsAction="always"
+        />
+
+</menu>
+
+
+<!--  app:showAsAction   -->
+<!--    always - will always show in the action bar-->
+<!--    never - will never show, and therefore will be available through the overflow menu-->
+<!--    ifRoom - only if there is sufficient space in the action bar, then it would be shown. Keep in mind that per the documentation, there is a limit to how many icons you can have on the action bar.-->
+<!--    withText-will include the item’s title in the action bar-->
+<!--    collapseActionView - if this item has an action view associated with it, it will become collapsible(from API 14 and above)-->
+
