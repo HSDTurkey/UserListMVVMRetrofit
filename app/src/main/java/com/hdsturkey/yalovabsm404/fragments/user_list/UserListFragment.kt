@@ -7,11 +7,19 @@ import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 
 
 class UserListFragment : Fragment() {
-    private lateinit var mBinding : FragmentUserListBinding
+    private lateinit var mBinding: FragmentUserListBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mBinding = FragmentUserListBinding.inflate(layoutInflater)
 
+        setListeners()
+
+    }
+
+    private fun setListeners() {
+        mBinding.tvUserList.setOnClickListener {
+
+        }
     }
 }
