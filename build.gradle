@@ -2,6 +2,7 @@
 buildscript {
 
     ext {
+        nav_version = "2.4.1"
         build_gradle_version = '7.1.2'
         kotlin_gradle_plugin_version = '1.6.10'
     }
@@ -14,6 +15,8 @@ buildscript {
     dependencies {
         classpath "com.android.tools.build:gradle:$build_gradle_version"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_gradle_plugin_version"
+
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$nav_version"
     }
 }
 
