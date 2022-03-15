@@ -7,6 +7,7 @@
     tools:context=".fragments.user_detail.UserDetailFragment">
 
     <TextView
+        android:id="@+id/tv_user_detail"
         style="@style/TextAppearance.AppCompat.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

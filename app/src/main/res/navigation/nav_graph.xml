@@ -5,6 +5,11 @@
     android:id="@+id/nav_graph"
     app:startDestination="@id/userListFragment">
 
+    <!--    The Type field indicates whether the destination is implemented as a fragment, activity, or other custom class in your source code.-->
+    <!--    The Label field contains the user-readable name of the destination. This might be surfaced to the UI—for example, if you connect the NavGraph to a Toolbar using setupWithNavController(). For this reason, it is recommended that you use resource strings for this value.-->
+    <!--    The ID field contains the ID of the destination which is used to refer to the destination in code.-->
+    <!--    The Class dropdown shows the name of the class that is associated with the destination. You can click this dropdown to change the associated class to another destination type.-->
+
     <fragment
         android:id="@+id/userListFragment"
         android:name="com.hdsturkey.yalovabsm404.fragments.user_list.UserListFragment"
@@ -23,6 +28,12 @@
         <action
             android:id="@+id/action_userDetailFragment_to_userListFragment"
             app:destination="@id/userListFragment" />
+
+        <argument
+            android:name="userID"
+            app:argType="string"
+            app:nullable="false" />
+
     </fragment>
 
 </navigation>

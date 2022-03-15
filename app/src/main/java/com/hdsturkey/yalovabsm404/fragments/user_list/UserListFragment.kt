@@ -26,13 +26,18 @@ class UserListFragment : Fragment() {
 
                 mBinding.tilUserId.error = null
 
+                val userID = mBinding.etUserId.text.toString()
+                navigateToDetailScreen(userID)
             } else {
                 mBinding.tilUserId.error = "Please enter 6 digit user id"
             }
         }
     }
 
-
+    private fun navigateToDetailScreen(userID: String) {
+        val action = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(userID)
+        findNavController().navigate(action)
+    }
 
     private fun isInputCorrect(): Boolean {
         val userID = mBinding.etUserId.text
