@@ -1,11 +1,14 @@
 package com.hdsturkey.yalovabsm404
 
+import android.app.Activity
 import android.content.Context
-import android.widget.Toast
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hdsturkey.yalovabsm404.activities.UserActivity
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_add -> {
                 toast("Add Menu Clicked")
+                startActivity(UserActivity::class.java)
                 return true
             }
             R.id.menu_edit -> {
@@ -48,6 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     fun Context.toast(message: String, length: Int = Toast.LENGTH_SHORT) {
         Toast.makeText(this, message, length).show()
+    }
+
+    fun Activity.startActivity(targetActivity: Class<*>) {
+        (Intent(this,targetActivity))
     }
 
 }
