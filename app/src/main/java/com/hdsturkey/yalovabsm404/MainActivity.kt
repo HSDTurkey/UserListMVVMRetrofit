@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Activity.startActivity(targetActivity: Class<*>) {
-        (Intent(this,targetActivity))
+        startActivity(Intent(this,targetActivity))
     }
 
 }
