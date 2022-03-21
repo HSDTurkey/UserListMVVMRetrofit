@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
@@ -15,10 +16,26 @@ import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
 class UserListFragment : Fragment() {
     private lateinit var mBinding: FragmentUserListBinding
 
+    private val userList: List<User> by lazy { getUsers() }
+    private val userListAdapter = UserListAdapter(::userClicked)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setListeners()
+        setRecyclerView()
+
+    }
+
+    private fun setRecyclerView() {
+        mBinding.rvUserList.apply {
+            adapter = userListAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+        userListAdapter.submitList(userList)
+    }
+
+    private fun userClicked(position: Int) {
 
     }
 
