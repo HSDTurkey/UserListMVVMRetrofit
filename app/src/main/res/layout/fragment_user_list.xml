@@ -42,8 +42,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
+        android:visibility="gone"
         tools:itemCount="4"
         tools:listitem="@layout/item_user" />
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/vp_user_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </androidx.viewpager2.widget.ViewPager2>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

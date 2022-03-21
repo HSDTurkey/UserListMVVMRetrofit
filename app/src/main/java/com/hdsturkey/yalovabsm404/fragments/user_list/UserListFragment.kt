@@ -25,13 +25,20 @@ class UserListFragment : Fragment() {
 
         setListeners()
         setRecyclerView()
-
+        setViewPager()
     }
 
     private fun setRecyclerView() {
         mBinding.rvUserList.apply {
             adapter = userListAdapter
             layoutManager = LinearLayoutManager(context)
+        }
+        userListAdapter.submitList(userList)
+    }
+
+    private fun setViewPager() {
+        mBinding.vpUserList.apply {
+            adapter = userListAdapter
         }
         userListAdapter.submitList(userList)
     }

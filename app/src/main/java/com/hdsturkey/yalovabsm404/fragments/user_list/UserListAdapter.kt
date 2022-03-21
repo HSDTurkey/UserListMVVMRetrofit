@@ -30,7 +30,7 @@ class UserListAdapter constructor(private val clickListener: (position: Int) -> 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val mBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.context))     //R.layout.item_user
+        val mBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.context),parent,false)     //R.layout.item_user
         return UserViewHolder(mBinding)
     }
 
