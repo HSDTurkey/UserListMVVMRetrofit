@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.hdsturkey.yalovabsm404.R
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
 
 
 class UserListFragment : Fragment() {
@@ -46,7 +48,7 @@ class UserListFragment : Fragment() {
             return false
         }
 
-        if (userID.toString().length<6) {
+        if (userID.toString().length < 6) {
             return false
         }
 
@@ -59,5 +61,90 @@ class UserListFragment : Fragment() {
     ): View {
         mBinding = FragmentUserListBinding.inflate(layoutInflater)
         return mBinding.root
+    }
+
+    private fun getUsers(): List<User> {
+        return listOf(
+            User(
+                UserName("CT", "Cengiz", "TORU"),
+                "Male",
+                "12323443",
+                UserPicture(
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4"
+                )
+            ),
+            User(
+                UserName("Mademoiselle", "Eliana", "Bernard"),
+                "Female",
+                "078 359 26 63",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/33.jpg",
+                    "https://randomuser.me/api/portraits/med/women/33.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/33.jpg"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+            User(
+                UserName("Miss", "Franka", "Wagenknecht"),
+                "female",
+                "0426-0171993",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/10.jpg",
+                    "https://randomuser.me/api/portraits/med/women/10.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/10.jpg"
+                )
+            ),
+            User(
+                UserName("Mademoiselle", "Eliana", "Bernard"),
+                "Female",
+                "078 359 26 63",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/33.jpg",
+                    "https://randomuser.me/api/portraits/med/women/33.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/33.jpg"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+            User(
+                UserName("CT", "Cengiz", "TORU"),
+                "Male",
+                "12323443",
+                UserPicture(
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+        )
     }
 }
