@@ -17,7 +17,7 @@ import com.hdsturkey.yalovabsm404.utils.toast
 class UserListFragment : Fragment() {
     private lateinit var mBinding: FragmentUserListBinding
 
-    private val userList: List<User> by lazy { getUsers() }
+    private val userList: List<User> by lazy { getUsers() + getUsers() + getUsers() }
     private val userListAdapter = UserListAdapter(::userClicked)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
