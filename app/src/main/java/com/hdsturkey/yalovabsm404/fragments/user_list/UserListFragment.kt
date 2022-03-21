@@ -11,6 +11,7 @@ import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
+import com.hdsturkey.yalovabsm404.utils.toast
 
 
 class UserListFragment : Fragment() {
@@ -36,7 +37,9 @@ class UserListFragment : Fragment() {
     }
 
     private fun userClicked(position: Int) {
-
+        val clickedUser = userList[position]
+        toast("${clickedUser.name.first}")
+        navigateToDetailScreen("${clickedUser.name.first} ${clickedUser.name.last}")
     }
 
     private fun setListeners() {
