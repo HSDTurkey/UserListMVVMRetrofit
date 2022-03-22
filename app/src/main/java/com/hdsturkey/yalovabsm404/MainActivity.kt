@@ -8,7 +8,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.hdsturkey.yalovabsm404.activities.LoginActivity
 import com.hdsturkey.yalovabsm404.activities.UserActivity
+import com.hdsturkey.yalovabsm404.utils.Constants.PREF_USER_NAME
 import com.hdsturkey.yalovabsm404.utils.SharedPreferencesHelper
 
 class MainActivity : AppCompatActivity() {
@@ -38,7 +40,17 @@ class MainActivity : AppCompatActivity() {
         when (item.itemId) {
             R.id.menu_add -> {
                 toast("Add Menu Clicked")
-                startActivity(UserActivity::class.java)
+
+                val storedUserName = SharedPreferencesHelper.getString(PREF_USER_NAME)
+                if (storedUserName.isBlank()){
+                    toast("User is not logged in")
+                    startActivity(LoginActivity::class.java)
+                } else {
+                    toast("User is logged in")
+                    startActivity(UserActivity::class.java)
+                }
+
+
                 return true
             }
             R.id.menu_edit -> {
