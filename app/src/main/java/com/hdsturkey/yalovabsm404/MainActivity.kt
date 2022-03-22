@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.hdsturkey.yalovabsm404.activities.LoginActivity
 import com.hdsturkey.yalovabsm404.activities.UserActivity
-import com.hdsturkey.yalovabsm404.utils.Constants.PREF_USER_NAME
+import com.hdsturkey.yalovabsm404.utils.Constants.PREF_USER_EMAIL
 import com.hdsturkey.yalovabsm404.utils.SharedPreferencesHelper
 
 class MainActivity : AppCompatActivity() {
@@ -41,8 +41,8 @@ class MainActivity : AppCompatActivity() {
             R.id.menu_add -> {
                 toast("Add Menu Clicked")
 
-                val storedUserName = SharedPreferencesHelper.getString(PREF_USER_NAME)
-                if (storedUserName.isBlank()){
+                val storedUserEmail = SharedPreferencesHelper.getString(PREF_USER_EMAIL)
+                if (storedUserEmail.isBlank()){
                     toast("User is not logged in")
                     startActivity(LoginActivity::class.java)
                 } else {
