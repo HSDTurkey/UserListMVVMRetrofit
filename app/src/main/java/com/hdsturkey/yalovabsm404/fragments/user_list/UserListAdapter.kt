@@ -6,16 +6,18 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.hdsturkey.yalovabsm404.databinding.ItemUserBinding
 import com.hdsturkey.yalovabsm404.data.model.User
+import com.hdsturkey.yalovabsm404.databinding.ItemUserBinding
 import com.hdsturkey.yalovabsm404.utils.invisible
 import com.hdsturkey.yalovabsm404.utils.show
 
-class UserListAdapter constructor(private val clickListener: (position: Int) -> Unit) :
-    ListAdapter<User, UserListAdapter.UserViewHolder>(UserDiffCallBack()) {
+class UserListAdapter constructor(
+    private val clickListener: (position: Int) -> Unit,
+    private val deleteClickListener: (position: Int) -> Unit
+) : ListAdapter<User, UserListAdapter.UserViewHolder>(UserDiffCallBack()) {
 
     class UserViewHolder(private val mBinding: ItemUserBinding) : RecyclerView.ViewHolder(mBinding.root) {
-        fun bind(user: User, isLastItem: Boolean) {
+        fun bind(user: User, isLastItem: Boolean, onDeleteClick: () -> Unit) {
             mBinding.tvUserName.text = "${user.name.first}  ${user.name.last}"
             mBinding.tvGender.text = user.gender
             mBinding.tvPhone.text = user.phone
@@ -25,6 +27,8 @@ class UserListAdapter constructor(private val clickListener: (position: Int) -> 
             } else {
                 mBinding.divider.show()
             }
+
+            mBinding.btnDelete.setOnClickListener { onDeleteClick.invoke() }
         }
 
         companion object {
@@ -43,9 +47,11 @@ class UserListAdapter constructor(private val clickListener: (position: Int) -> 
 
     override fun onBindViewHolder(userViewHolder: UserViewHolder, position: Int) {
         val item = getItem(position)
-        val isItemLastItem = position == (currentList.size - 1)
-        userViewHolder.bind(item, isLastItem = isItemLastItem)
-        userViewHolder.itemView.setOnClickListener { clickListener.invoke(position) }
+        val isItemLastItem = position == (itemCount - 1)
+        userViewHolder.itemView.setOnClickListener { clickListener.invoke(userViewHolder.adapterPosition) }
+        userViewHolder.bind(item, isLastItem = isItemLastItem) {
+            deleteClickListener.invoke(userViewHolder.adapterPosition)
+        }
     }
 
     private class UserDiffCallBack : DiffUtil.ItemCallback<User>() {

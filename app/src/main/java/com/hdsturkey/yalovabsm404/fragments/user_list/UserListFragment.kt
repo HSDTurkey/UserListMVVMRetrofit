@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hdsturkey.yalovabsm404.data.local.AppDatabase
-import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.data.model.UserName
 import com.hdsturkey.yalovabsm404.data.model.UserPicture
+import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.utils.toast
 
 
@@ -20,7 +20,7 @@ class UserListFragment : Fragment() {
     private lateinit var mBinding: FragmentUserListBinding
 
     private var userList: List<User> = listOf()
-    private val userListAdapter = UserListAdapter(::userClicked)
+    private val userListAdapter = UserListAdapter(::userClicked, ::deleteUserClicked)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,9 +45,9 @@ class UserListFragment : Fragment() {
     private fun observeUserListFromDB() {
         Log.d(TAG, "STARTING TO OBSERVE DATABASE CHANGINATIONS")
         AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
-            Log.d(TAG, "New User list has been delivered. Submitting to UI")
+            Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
             userList = list
-            userListAdapter.submitList(userList)
+            userListAdapter.submitList(list.toMutableList())
         }
     }
 
@@ -55,6 +55,7 @@ class UserListFragment : Fragment() {
         mBinding.rvUserList.apply {
             adapter = userListAdapter
             layoutManager = LinearLayoutManager(context)
+            setHasFixedSize(true)
         }
         Log.d(TAG, "RECYCLERVIEW INITIALIZED")
     }
@@ -63,6 +64,13 @@ class UserListFragment : Fragment() {
         val clickedUser = userList[position]
         toast("${clickedUser.name.first}")
         navigateToDetailScreen("${clickedUser.name.first} ${clickedUser.name.last}")
+    }
+
+    private fun deleteUserClicked(position: Int) {
+        Log.d(TAG, "USER DELETE CLICKED for position $position")
+        val user = userList[position]
+        AppDatabase.getInstance().userDao().delete(user)
+        Log.d(TAG, "USER DELETED ${user.name.first}")
     }
 
     private fun setListeners() {
