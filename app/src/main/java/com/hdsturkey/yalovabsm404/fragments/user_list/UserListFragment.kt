@@ -28,7 +28,6 @@ class UserListFragment : Fragment() {
         insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
-        observeUserListFromDB()
     }
 
     private fun insertMockUserListToDatabase() {
@@ -68,15 +67,17 @@ class UserListFragment : Fragment() {
 
     private fun setListeners() {
         mBinding.tvUserList.setOnClickListener {
-            if (isInputCorrect()) {
-
-                mBinding.tilUserId.error = null
-
-                val userID = mBinding.etUserId.text.toString()
-                navigateToDetailScreen(userID)
-            } else {
-                mBinding.tilUserId.error = "Please enter 6 digit user id"
-            }
+            observeUserListFromDB()
+//
+//            if (isInputCorrect()) {
+//
+//                mBinding.tilUserId.error = null
+//
+//                val userID = mBinding.etUserId.text.toString()
+//                navigateToDetailScreen(userID)
+//            } else {
+//                mBinding.tilUserId.error = "Please enter 6 digit user id"
+//            }
         }
     }
 
