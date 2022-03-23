@@ -20,9 +20,12 @@
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_user_name"
         style="@style/TextAppearance.AppCompat.Title"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toStartOf="@id/rating_bar"
         app:layout_constraintStart_toEndOf="@+id/img_user_profile_image"
         app:layout_constraintTop_toTopOf="@id/img_user_profile_image"
         tools:text="Cengiz TORU" />
@@ -52,6 +55,7 @@
 
 
     <RatingBar
+        android:id="@+id/rating_bar"
         style="@style/Widget.AppCompat.RatingBar.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
