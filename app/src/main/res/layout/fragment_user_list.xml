@@ -44,10 +44,14 @@
         android:id="@+id/rv_user_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="16dp"
+        android:clipToPadding="true"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_user_list"
-        tools:itemCount="4"
+        tools:itemCount="8"
         tools:listitem="@layout/item_user" />
 
 
