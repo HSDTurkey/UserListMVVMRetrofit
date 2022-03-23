@@ -79,6 +79,23 @@ class UserListFragment : Fragment() {
 //                mBinding.tilUserId.error = "Please enter 6 digit user id"
 //            }
         }
+
+        mBinding.fabInsertUser.setOnClickListener {
+            val user = getMockUserList()[6]
+            AppDatabase.getInstance().userDao().insert(user)
+            Log.d(TAG, "NEW USER INSERTED")
+        }
+        
+        mBinding.fabDeleteUser.setOnClickListener {
+            if (userList.isEmpty()){
+                toast("USER LIST EMPTY")
+                return@setOnClickListener
+            }
+
+            val user = userList[0]
+            AppDatabase.getInstance().userDao().delete(user)
+            Log.d(TAG, "FIRST USER DELETED")
+        }
     }
 
     private fun navigateToDetailScreen(userID: String) {
