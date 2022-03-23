@@ -27,11 +27,18 @@ class UserListAdapter constructor(private val clickListener: (position: Int) -> 
             }
         }
 
+        companion object {
+            fun from(parent: ViewGroup): UserViewHolder {
+                val layoutInflater = LayoutInflater.from(parent.context)
+                val binding = ItemUserBinding.inflate(layoutInflater) // //R.layout.item_user
+                return UserViewHolder(binding)
+            }
+        }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        val mBinding = ItemUserBinding.inflate(LayoutInflater.from(parent.context))     //R.layout.item_user
-        return UserViewHolder(mBinding)
+        return UserViewHolder.from(parent)
     }
 
     override fun onBindViewHolder(userViewHolder: UserViewHolder, position: Int) {
