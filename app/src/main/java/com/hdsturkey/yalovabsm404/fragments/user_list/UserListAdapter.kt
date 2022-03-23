@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.hdsturkey.yalovabsm404.databinding.ItemUserBinding
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
+import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.utils.invisible
 import com.hdsturkey.yalovabsm404.utils.show
 

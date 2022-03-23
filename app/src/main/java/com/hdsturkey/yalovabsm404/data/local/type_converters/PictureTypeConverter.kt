@@ -1,7 +1,7 @@
 package com.hdsturkey.yalovabsm404.data.local.type_converters
 
 import androidx.room.TypeConverter
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
+import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import org.json.JSONObject
 
 class UserPictureTypeConverter {

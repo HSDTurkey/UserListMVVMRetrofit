@@ -10,9 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hdsturkey.yalovabsm404.data.local.AppDatabase
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
+import com.hdsturkey.yalovabsm404.data.model.User
+import com.hdsturkey.yalovabsm404.data.model.UserName
+import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import com.hdsturkey.yalovabsm404.utils.toast
 
 

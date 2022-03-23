@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.hdsturkey.yalovabsm404.data.local.type_converters.NameTypeConverter
 import com.hdsturkey.yalovabsm404.data.local.type_converters.UserPictureTypeConverter
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
+import com.hdsturkey.yalovabsm404.data.model.User
 
 
 // The class must be annotated with a @Database annotation that includes an entities array that

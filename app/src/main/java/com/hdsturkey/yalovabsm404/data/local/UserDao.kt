@@ -2,8 +2,8 @@ package com.hdsturkey.yalovabsm404.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
+import com.hdsturkey.yalovabsm404.data.model.User
+import com.hdsturkey.yalovabsm404.data.model.UserName
 
 @Dao
 interface UserDao {

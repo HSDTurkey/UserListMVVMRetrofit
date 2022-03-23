@@ -1,4 +1,4 @@
-package com.hdsturkey.yalovabsm404.fragments.user_list.model
+package com.hdsturkey.yalovabsm404.data.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

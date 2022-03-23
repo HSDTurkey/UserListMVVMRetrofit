@@ -1,4 +1,4 @@
-package com.hdsturkey.yalovabsm404.fragments.user_list.model
+package com.hdsturkey.yalovabsm404.data.model
 
 data class UserName(
     val title: String,

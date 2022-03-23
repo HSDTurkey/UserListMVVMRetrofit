@@ -1,7 +1,7 @@
 package com.hdsturkey.yalovabsm404.data.local.type_converters
 
 import androidx.room.TypeConverter
-import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
+import com.hdsturkey.yalovabsm404.data.model.UserName
 import org.json.JSONObject
 
 class NameTypeConverter {
