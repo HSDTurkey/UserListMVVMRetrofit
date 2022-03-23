@@ -11,6 +11,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHeight_percent="0.95"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -32,11 +33,12 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_phone"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:textSize="14sp"
+        app:layout_constraintEnd_toEndOf="@id/tv_user_name"
         app:layout_constraintStart_toStartOf="@id/tv_user_name"
         app:layout_constraintTop_toBottomOf="@+id/tv_user_name"
         tools:text="789439787899785978" />
@@ -48,7 +50,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/divider"
         app:layout_constraintStart_toStartOf="@id/tv_phone"
         app:layout_constraintTop_toBottomOf="@+id/tv_phone"
         tools:text="Male" />
@@ -66,21 +67,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/tv_user_name" />
 
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginTop="8dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/btn_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="@id/divider"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/rating_bar"
         app:layout_constraintTop_toBottomOf="@id/rating_bar"
         app:srcCompat="@android:drawable/ic_menu_delete" />

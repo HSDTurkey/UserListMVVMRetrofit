@@ -17,24 +17,18 @@ class UserListAdapter constructor(
 ) : ListAdapter<User, UserListAdapter.UserViewHolder>(UserDiffCallBack()) {
 
     class UserViewHolder(private val mBinding: ItemUserBinding) : RecyclerView.ViewHolder(mBinding.root) {
-        fun bind(user: User, isLastItem: Boolean, onDeleteClick: () -> Unit) {
+        fun bind(user: User,onDeleteClick: () -> Unit) {
             mBinding.tvUserName.text = "${user.name.first}  ${user.name.last}"
             mBinding.tvGender.text = user.gender
             mBinding.tvPhone.text = user.phone
             mBinding.imgUserProfileImage.load(user.picture.medium)
-            if (isLastItem) {
-                mBinding.divider.invisible()
-            } else {
-                mBinding.divider.show()
-            }
-
             mBinding.btnDelete.setOnClickListener { onDeleteClick.invoke() }
         }
 
         companion object {
             fun from(parent: ViewGroup): UserViewHolder {
                 val layoutInflater = LayoutInflater.from(parent.context)
-                val binding = ItemUserBinding.inflate(layoutInflater) // //R.layout.item_user
+                val binding = ItemUserBinding.inflate(layoutInflater,parent,false) // //R.layout.item_user
                 return UserViewHolder(binding)
             }
         }
@@ -47,9 +41,8 @@ class UserListAdapter constructor(
 
     override fun onBindViewHolder(userViewHolder: UserViewHolder, position: Int) {
         val item = getItem(position)
-        val isItemLastItem = position == (itemCount - 1)
         userViewHolder.itemView.setOnClickListener { clickListener.invoke(userViewHolder.adapterPosition) }
-        userViewHolder.bind(item, isLastItem = isItemLastItem) {
+        userViewHolder.bind(item) {
             deleteClickListener.invoke(userViewHolder.adapterPosition)
         }
     }

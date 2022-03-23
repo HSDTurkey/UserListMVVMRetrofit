@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.hdsturkey.yalovabsm404.data.local.AppDatabase
 import com.hdsturkey.yalovabsm404.data.model.User
@@ -52,12 +53,19 @@ class UserListFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
+        val mLayoutManager = LinearLayoutManager(context)
         mBinding.rvUserList.apply {
             adapter = userListAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = mLayoutManager
             setHasFixedSize(true)
         }
         Log.d(TAG, "RECYCLERVIEW INITIALIZED")
+
+        val itemDecoration = DividerItemDecoration(
+            mBinding.rvUserList.context,
+            mLayoutManager.orientation
+        )
+        mBinding.rvUserList.addItemDecoration(itemDecoration)
     }
 
     private fun userClicked(position: Int) {
