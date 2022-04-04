@@ -36,6 +36,7 @@ class UserListFragment : Fragment() {
         mBinding.rvUserList.apply {
             adapter = userListAdapter
             layoutManager = mLayoutManager
+            setHasFixedSize(true)
         }
         userListAdapter.submitList(userList)
     }
