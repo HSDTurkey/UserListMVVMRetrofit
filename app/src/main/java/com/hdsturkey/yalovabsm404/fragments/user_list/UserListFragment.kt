@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
 import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
@@ -29,9 +30,12 @@ class UserListFragment : Fragment() {
     }
 
     private fun setRecyclerView() {
+        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.orientation = RecyclerView.VERTICAL
+//        mLayoutManager.orientation = RecyclerView.HORIZONTAL
         mBinding.rvUserList.apply {
             adapter = userListAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = mLayoutManager
         }
         userListAdapter.submitList(userList)
     }
