@@ -6,18 +6,45 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.hdsturkey.yalovabsm404.R
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.User
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserName
+import com.hdsturkey.yalovabsm404.fragments.user_list.model.UserPicture
+import com.hdsturkey.yalovabsm404.utils.toast
 
 
 class UserListFragment : Fragment() {
     private lateinit var mBinding: FragmentUserListBinding
 
+    private val userList: List<User> by lazy { getUsers() + getUsers() + getUsers() }
+    private val userListAdapter = UserListAdapter(::userClicked)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setListeners()
+        setRecyclerView()
 
+    }
+
+    private fun setRecyclerView() {
+        val mLayoutManager = LinearLayoutManager(context)
+        mLayoutManager.orientation = RecyclerView.VERTICAL      //Dikeyde listeleme yapar
+//        mLayoutManager.orientation = RecyclerView.HORIZONTAL  //Yatayda listeleme yapar
+        mBinding.rvUserList.apply {
+            adapter = userListAdapter
+            layoutManager = mLayoutManager
+            setHasFixedSize(true)
+        }
+        userListAdapter.submitList(userList)
+    }
+
+    private fun userClicked(position: Int) {
+        val clickedUser = userList[position]
+        toast("${clickedUser.name.first}")
+        navigateToDetailScreen("${clickedUser.name.first} ${clickedUser.name.last}")
     }
 
     private fun setListeners() {
@@ -46,7 +73,7 @@ class UserListFragment : Fragment() {
             return false
         }
 
-        if (userID.toString().length<6) {
+        if (userID.toString().length < 6) {
             return false
         }
 
@@ -59,5 +86,90 @@ class UserListFragment : Fragment() {
     ): View {
         mBinding = FragmentUserListBinding.inflate(layoutInflater)
         return mBinding.root
+    }
+
+    private fun getUsers(): List<User> {
+        return listOf(
+            User(
+                UserName("CT", "Cengiz", "TORU"),
+                "Male",
+                "12323443",
+                UserPicture(
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4"
+                )
+            ),
+            User(
+                UserName("Mademoiselle", "Eliana", "Bernard"),
+                "Female",
+                "078 359 26 63",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/33.jpg",
+                    "https://randomuser.me/api/portraits/med/women/33.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/33.jpg"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+            User(
+                UserName("Miss", "Franka", "Wagenknecht"),
+                "female",
+                "0426-0171993",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/10.jpg",
+                    "https://randomuser.me/api/portraits/med/women/10.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/10.jpg"
+                )
+            ),
+            User(
+                UserName("Mademoiselle", "Eliana", "Bernard"),
+                "Female",
+                "078 359 26 63",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/women/33.jpg",
+                    "https://randomuser.me/api/portraits/med/women/33.jpg",
+                    "https://randomuser.me/api/portraits/thumb/women/33.jpg"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+            User(
+                UserName("CT", "Cengiz", "TORU"),
+                "Male",
+                "12323443",
+                UserPicture(
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4",
+                    "https://avatars.githubusercontent.com/u/28221219?v=4"
+                )
+            ),
+            User(
+                UserName("Mr", "Boaventura", "Teixeira"),
+                "male",
+                "(97) 4382-7544",
+                UserPicture(
+                    "https://randomuser.me/api/portraits/men/41.jpg",
+                    "https://randomuser.me/api/portraits/med/men/41.jpg",
+                    "https://randomuser.me/api/portraits/thumb/men/41.jpg"
+                )
+            ),
+        )
     }
 }
