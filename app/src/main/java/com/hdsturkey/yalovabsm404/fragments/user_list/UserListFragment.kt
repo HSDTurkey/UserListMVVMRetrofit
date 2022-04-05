@@ -1,11 +1,13 @@
 package com.hdsturkey.yalovabsm404.fragments.user_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
@@ -18,15 +20,36 @@ import com.hdsturkey.yalovabsm404.utils.toast
 class UserListFragment : Fragment() {
     private lateinit var mBinding: FragmentUserListBinding
 
-    private val userList: List<User> by lazy { getUsers() + getUsers() + getUsers() }
-    private val userListAdapter = UserListAdapter(::userClicked)
+    private var userList: List<User> = listOf()
+    private val userListAdapter = UserListAdapter(::userClicked, ::deleteUserClicked)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
+    }
 
+    private fun insertMockUserListToDatabase() {
+        val localDBUsers = AppDatabase.getInstance().userDao().getAllOneShot()
+        if (localDBUsers.isEmpty()) {
+            Log.d(TAG, "Starting to inserting mock data to DB ")
+            val mockUserList = getMockUserList()
+            AppDatabase.getInstance().userDao().insert(mockUserList)
+            Log.d(TAG, "Mock data inserted to DB")
+        } else {
+            Log.d(TAG, "Mock data don't inserted to DB because already exists ")
+        }
+    }
+
+    private fun observeUserListFromDB() {
+        Log.d(TAG, "STARTING TO OBSERVE DATABASE CHANGINATIONS")
+        AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
+            Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
+            userList = list
+            userListAdapter.submitList(list.toMutableList())
+        }
     }
 
     private fun setRecyclerView() {
@@ -38,7 +61,13 @@ class UserListFragment : Fragment() {
             layoutManager = mLayoutManager
             setHasFixedSize(true)
         }
-        userListAdapter.submitList(userList)
+        Log.d(TAG, "RECYCLERVIEW INITIALIZED")
+
+        val itemDecoration = DividerItemDecoration(
+            mBinding.rvUserList.context,
+            mLayoutManager.orientation
+        )
+        mBinding.rvUserList.addItemDecoration(itemDecoration)
     }
 
     private fun userClicked(position: Int) {
@@ -47,17 +76,32 @@ class UserListFragment : Fragment() {
         navigateToDetailScreen("${clickedUser.name.first} ${clickedUser.name.last}")
     }
 
+    private fun deleteUserClicked(position: Int) {
+        Log.d(TAG, "USER DELETE CLICKED for position $position")
+        val user = userList[position]
+        AppDatabase.getInstance().userDao().delete(user)
+        Log.d(TAG, "USER DELETED ${user.name.first}")
+    }
+
     private fun setListeners() {
         mBinding.tvUserList.setOnClickListener {
-            if (isInputCorrect()) {
+            observeUserListFromDB()
+//
+//            if (isInputCorrect()) {
+//
+//                mBinding.tilUserId.error = null
+//
+//                val userID = mBinding.etUserId.text.toString()
+//                navigateToDetailScreen(userID)
+//            } else {
+//                mBinding.tilUserId.error = "Please enter 6 digit user id"
+//            }
+        }
 
-                mBinding.tilUserId.error = null
-
-                val userID = mBinding.etUserId.text.toString()
-                navigateToDetailScreen(userID)
-            } else {
-                mBinding.tilUserId.error = "Please enter 6 digit user id"
-            }
+        mBinding.fabInsertUser.setOnClickListener {
+            val user = getMockUserList()[6]
+            AppDatabase.getInstance().userDao().insert(user)
+            Log.d(TAG, "NEW USER INSERTED")
         }
     }
 
@@ -88,7 +132,7 @@ class UserListFragment : Fragment() {
         return mBinding.root
     }
 
-    private fun getUsers(): List<User> {
+    private fun getMockUserList(): List<User> {
         return listOf(
             User(
                 UserName("CT", "Cengiz", "TORU"),
@@ -171,5 +215,9 @@ class UserListFragment : Fragment() {
                 )
             ),
         )
+    }
+
+    companion object {
+        const val TAG = "USERLISTFRAGMENT"
     }
 }

@@ -1,4 +1,4 @@
-package com.hdsturkey.yalovabsm404
+package com.hdsturkey.yalovabsm404.activities
 
 import android.app.Activity
 import android.content.Context
@@ -8,8 +8,8 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.hdsturkey.yalovabsm404.activities.LoginActivity
-import com.hdsturkey.yalovabsm404.activities.UserActivity
+import com.hdsturkey.yalovabsm404.R
+import com.hdsturkey.yalovabsm404.data.local.AppDatabase
 import com.hdsturkey.yalovabsm404.utils.Constants.PREF_USER_EMAIL
 import com.hdsturkey.yalovabsm404.utils.SharedPreferencesHelper
 
@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         SharedPreferencesHelper.init(this)
+
+        AppDatabase.init(applicationContext)
 
 
     }
@@ -42,7 +44,7 @@ class MainActivity : AppCompatActivity() {
                 toast("Add Menu Clicked")
 
                 val storedUserEmail = SharedPreferencesHelper.getString(PREF_USER_EMAIL)
-                if (storedUserEmail.isBlank()){
+                if (storedUserEmail.isBlank()) {
                     toast("User is not logged in")
                     startActivity(LoginActivity::class.java)
                 } else {
@@ -71,7 +73,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun Activity.startActivity(targetActivity: Class<*>) {
-        startActivity(Intent(this,targetActivity))
+        startActivity(Intent(this, targetActivity))
     }
 
 }
