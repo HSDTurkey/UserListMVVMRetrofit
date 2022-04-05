@@ -31,8 +31,8 @@ class UserListFragment : Fragment() {
 
     private fun setRecyclerView() {
         val mLayoutManager = LinearLayoutManager(context)
-        mLayoutManager.orientation = RecyclerView.VERTICAL
-//        mLayoutManager.orientation = RecyclerView.HORIZONTAL
+        mLayoutManager.orientation = RecyclerView.VERTICAL      //Dikeyde listeleme yapar
+//        mLayoutManager.orientation = RecyclerView.HORIZONTAL  //Yatayda listeleme yapar
         mBinding.rvUserList.apply {
             adapter = userListAdapter
             layoutManager = mLayoutManager
