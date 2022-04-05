@@ -22,10 +22,37 @@ class UserListFragment : Fragment() {
 
     private fun setListeners() {
         mBinding.tvUserList.setOnClickListener {
-            findNavController().navigate(R.id.action_userListFragment_to_userDetailFragment)
+            if (isInputCorrect()) {
+
+                mBinding.tilUserId.error = null
+
+                val userID = mBinding.etUserId.text.toString()
+                navigateToDetailScreen(userID)
+            } else {
+                mBinding.tilUserId.error = "Please enter 6 digit user id"
+            }
         }
     }
-    
+
+    private fun navigateToDetailScreen(userID: String) {
+        val action = UserListFragmentDirections.actionUserListFragmentToUserDetailFragment(userID)
+        findNavController().navigate(action)
+    }
+
+    private fun isInputCorrect(): Boolean {
+        val userID = mBinding.etUserId.text
+
+        if (userID.isNullOrBlank()) {
+            return false
+        }
+
+        if (userID.toString().length<6) {
+            return false
+        }
+
+        return true
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
