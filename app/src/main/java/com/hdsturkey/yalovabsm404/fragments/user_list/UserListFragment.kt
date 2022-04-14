@@ -48,9 +48,13 @@ class UserListFragment : Fragment() {
         Log.d(TAG, "STARTING TO OBSERVE DATABASE CHANGINATIONS")
         AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
             Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
-            userList = list
-            userListAdapter.submitList(list.toMutableList())
+            updateUserList(list)
         }
+    }
+
+    private fun updateUserList(list: List<User>) {
+        userList = list
+        userListAdapter.submitList(list.toMutableList())
     }
 
     private fun setRecyclerView() {
