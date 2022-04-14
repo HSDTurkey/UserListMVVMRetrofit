@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,6 +16,7 @@ import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.data.model.UserName
 import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
+import com.hdsturkey.yalovabsm404.utils.NetworkHelper
 import com.hdsturkey.yalovabsm404.utils.toast
 
 
@@ -30,6 +32,24 @@ class UserListFragment : Fragment() {
         insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
+        fetchUserListFromRemote()
+    }
+
+    private fun fetchUserListFromRemote() {
+        lifecycleScope.launchWhenCreated {
+            val request = NetworkHelper.getServices().getUserList(10)
+            if (request.isSuccessful){
+                val userList = request.body()?.results
+                userList?.let { users->
+                    updateUserList(users)
+                    toast("count ${users.size}")
+                }?: run {
+                    toast("USER LIST NULL")
+                }
+            } else {
+                toast("Fetching user list failured. ${request.errorBody()}")
+            }
+        }
     }
 
     private fun insertMockUserListToDatabase() {
