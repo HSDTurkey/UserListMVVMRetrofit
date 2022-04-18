@@ -169,7 +169,7 @@ class UserListFragment : Fragment() {
 
         mBinding.fabInsertUser.setOnClickListener {
             val user = getMockUserList()[6]
-            AppDatabase.getInstance().userDao().insert(user)
+            userListViewModel.saveUser(user)
             Log.d(TAG, "NEW USER INSERTED")
         }
     }

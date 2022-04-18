@@ -27,4 +27,9 @@ class UserListRepository {
     suspend fun deleteAllUsers() {
         AppDatabase.getInstance().userDao().deleteAll()
     }
+
+
+    suspend fun saveUser(user: User) {
+        AppDatabase.getInstance().userDao().insert(user)
+    }
 }

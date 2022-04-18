@@ -14,7 +14,7 @@ interface UserDao {
     fun getAllOneShot(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: List<User>)

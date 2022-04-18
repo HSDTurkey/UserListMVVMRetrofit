@@ -22,7 +22,6 @@ class UserListViewModel : ViewModel() {
         return userListLiveData
     }
 
-
     fun deleteUser(user: User) {
         viewModelScope.launch {
            userListRepository.deleteUser(user)
@@ -32,6 +31,12 @@ class UserListViewModel : ViewModel() {
     fun deleteAllUsers() {
         viewModelScope.launch {
            userListRepository.deleteAllUsers()
+        }
+    }
+
+    fun saveUser(user: User) {
+        viewModelScope.launch {
+            userListRepository.saveUser(user)
         }
     }
 
