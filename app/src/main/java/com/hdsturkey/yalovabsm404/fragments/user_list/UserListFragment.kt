@@ -29,6 +29,8 @@ class UserListFragment : Fragment() {
     private var userList: List<User> = listOf()
     private val userListAdapter = UserListAdapter(::userClicked, ::deleteUserClicked)
 
+    private val userListViewModel by viewModels<UserListViewModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -58,8 +60,6 @@ class UserListFragment : Fragment() {
 //        }
 
         showLoading()
-
-        val userListViewModel by viewModels<UserListViewModel>()
 
         userListViewModel.getUsers(10).observe(viewLifecycleOwner) { userList ->
             if (userList.isNullOrEmpty().not()) {
@@ -142,7 +142,7 @@ class UserListFragment : Fragment() {
     private fun deleteUserClicked(position: Int) {
         Log.d(TAG, "USER DELETE CLICKED for position $position")
         val user = userList[position]
-        AppDatabase.getInstance().userDao().delete(user)
+        userListViewModel.deleteUser(user)
         Log.d(TAG, "USER DELETED ${user.name.first}")
     }
 

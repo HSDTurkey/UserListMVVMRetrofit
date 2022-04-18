@@ -22,4 +22,10 @@ class UserListViewModel : ViewModel() {
         return userListLiveData
     }
 
+
+    fun deleteUser(user: User) {
+        viewModelScope.launch {
+           userListRepository.deleteUser(user)
+        }
+    }
 }

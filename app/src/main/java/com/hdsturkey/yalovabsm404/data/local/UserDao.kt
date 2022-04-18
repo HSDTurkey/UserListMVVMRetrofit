@@ -20,7 +20,7 @@ interface UserDao {
     fun insert(user: List<User>)
 
     @Delete
-    fun delete(user: User)
+    suspend fun delete(user: User)
 
     @Query("SELECT * FROM user WHERE  name LIKE :name LIMIT 1")
     fun findByName(name: UserName): User

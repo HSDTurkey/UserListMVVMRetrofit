@@ -3,6 +3,7 @@ package com.hdsturkey.yalovabsm404.fragments.user_list
 import android.util.Log
 import androidx.lifecycle.liveData
 import com.hdsturkey.yalovabsm404.data.local.AppDatabase
+import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.utils.NetworkHelper
 
 class UserListRepository {
@@ -17,5 +18,9 @@ class UserListRepository {
         } else {
             Log.e("UserListRepository", "Fetching user list from remote failed. Local user list will shown.")
         }
+    }
+
+    suspend fun deleteUser(user: User) {
+        AppDatabase.getInstance().userDao().delete(user)
     }
 }
