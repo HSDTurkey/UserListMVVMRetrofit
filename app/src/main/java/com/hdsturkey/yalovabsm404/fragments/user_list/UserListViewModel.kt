@@ -28,4 +28,11 @@ class UserListViewModel : ViewModel() {
            userListRepository.deleteUser(user)
         }
     }
+
+    fun deleteAllUsers() {
+        viewModelScope.launch {
+           userListRepository.deleteAllUsers()
+        }
+    }
+
 }

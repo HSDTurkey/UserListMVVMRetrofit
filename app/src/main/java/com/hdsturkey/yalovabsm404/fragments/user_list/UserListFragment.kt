@@ -161,6 +161,12 @@ class UserListFragment : Fragment() {
 //            }
         }
 
+        mBinding.btnDeleteAll.setOnLongClickListener {
+            userListViewModel.deleteAllUsers()
+            getAllUsers()
+            true
+        }
+
         mBinding.fabInsertUser.setOnClickListener {
             val user = getMockUserList()[6]
             AppDatabase.getInstance().userDao().insert(user)

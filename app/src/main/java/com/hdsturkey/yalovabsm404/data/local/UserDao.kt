@@ -22,6 +22,9 @@ interface UserDao {
     @Delete
     suspend fun delete(user: User)
 
+    @Query("DELETE FROM user")
+    suspend fun deleteAll()
+
     @Query("SELECT * FROM user WHERE  name LIKE :name LIMIT 1")
     fun findByName(name: UserName): User
 
