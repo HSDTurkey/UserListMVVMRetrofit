@@ -18,6 +18,9 @@ import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
 import com.hdsturkey.yalovabsm404.utils.NetworkHelper
 import com.hdsturkey.yalovabsm404.utils.toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class UserListFragment : Fragment() {
@@ -36,14 +39,16 @@ class UserListFragment : Fragment() {
     }
 
     private fun fetchUserListFromRemote() {
-        lifecycleScope.launchWhenCreated {
+        lifecycleScope.launch(Dispatchers.IO) {
             val request = NetworkHelper.getServices().getUserList(10)
-            if (request.isSuccessful){
+            if (request.isSuccessful) {
                 val userList = request.body()?.results
-                userList?.let { users->
-                    updateUserList(users)
-                    toast("count ${users.size}")
-                }?: run {
+                userList?.let { users ->
+                    withContext(Dispatchers.Main) {
+                        updateUserList(users)
+                        toast("count ${users.size}")
+                    }
+                } ?: run {
                     toast("USER LIST NULL")
                 }
             } else {
