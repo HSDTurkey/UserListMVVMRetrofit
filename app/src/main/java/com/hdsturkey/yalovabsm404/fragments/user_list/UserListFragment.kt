@@ -37,10 +37,10 @@ class UserListFragment : Fragment() {
         insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
-        fetchUserListFromRemote()
+        getAllUsers()
     }
 
-    private fun fetchUserListFromRemote() {
+    private fun getAllUsers() {
 
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            val request = NetworkHelper.getServices().getUserList(10)
