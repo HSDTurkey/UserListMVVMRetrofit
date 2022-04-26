@@ -5,7 +5,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -16,11 +18,9 @@ import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.data.model.UserName
 import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
-import com.hdsturkey.yalovabsm404.utils.NetworkHelper
 import com.hdsturkey.yalovabsm404.utils.toast
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class UserListFragment : Fragment() {
@@ -29,32 +29,57 @@ class UserListFragment : Fragment() {
     private var userList: List<User> = listOf()
     private val userListAdapter = UserListAdapter(::userClicked, ::deleteUserClicked)
 
+    private val userListViewModel by viewModels<UserListViewModel>()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
-        fetchUserListFromRemote()
+        getAllUsers()
     }
 
-    private fun fetchUserListFromRemote() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val request = NetworkHelper.getServices().getUserList(10)
-            if (request.isSuccessful) {
-                val userList = request.body()?.results
-                userList?.let { users ->
-                    withContext(Dispatchers.Main) {
-                        updateUserList(users)
-                        toast("count ${users.size}")
-                    }
-                } ?: run {
-                    toast("USER LIST NULL")
-                }
-            } else {
-                toast("Fetching user list failured. ${request.errorBody()}")
+    private fun getAllUsers() {
+
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val request = NetworkHelper.getServices().getUserList(10)
+//            if (request.isSuccessful) {
+//                val userList = request.body()?.results
+//                userList?.let { users ->
+//                    withContext(Dispatchers.Main) {
+//                        updateUserList(users)
+//                        toast("count ${users.size}")
+//                    }
+//                } ?: run {
+//                    toast("USER LIST NULL")
+//                }
+//            } else {
+//                toast("Fetching user list failured. ${request.errorBody()}")
+//            }
+//        }
+
+        showLoading()
+
+        userListViewModel.getUsers(10).observe(viewLifecycleOwner) { userList ->
+            if (userList.isNullOrEmpty().not()) {
+                Log.e("UserListFragment", "USER COUNT ${userList?.size}")
+                updateUserList(userList.reversed())
+                hideLoading()
             }
         }
+
+
+    }
+
+    private fun showLoading() {
+        mBinding.progressbar.isVisible = true
+
+    }
+
+    private fun hideLoading() {
+        mBinding.progressbar.isVisible = false
+
     }
 
     private fun insertMockUserListToDatabase() {
@@ -71,15 +96,23 @@ class UserListFragment : Fragment() {
 
     private fun observeUserListFromDB() {
         Log.d(TAG, "STARTING TO OBSERVE DATABASE CHANGINATIONS")
-        AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
-            Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
-            updateUserList(list)
-        }
+//        AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
+//            Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
+//            updateUserList(list)
+//        }
     }
 
     private fun updateUserList(list: List<User>) {
         userList = list
         userListAdapter.submitList(list.toMutableList())
+        scrollToTopOfList()
+    }
+
+    private fun scrollToTopOfList() {
+        lifecycleScope.launch {
+            delay(200)
+            mBinding.rvUserList.smoothScrollToPosition(0)
+        }
     }
 
     private fun setRecyclerView() {
@@ -109,7 +142,7 @@ class UserListFragment : Fragment() {
     private fun deleteUserClicked(position: Int) {
         Log.d(TAG, "USER DELETE CLICKED for position $position")
         val user = userList[position]
-        AppDatabase.getInstance().userDao().delete(user)
+        userListViewModel.deleteUser(user)
         Log.d(TAG, "USER DELETED ${user.name.first}")
     }
 
@@ -128,9 +161,15 @@ class UserListFragment : Fragment() {
 //            }
         }
 
+        mBinding.btnDeleteAll.setOnLongClickListener {
+            userListViewModel.deleteAllUsers()
+            getAllUsers()
+            true
+        }
+
         mBinding.fabInsertUser.setOnClickListener {
             val user = getMockUserList()[6]
-            AppDatabase.getInstance().userDao().insert(user)
+            userListViewModel.saveUser(user)
             Log.d(TAG, "NEW USER INSERTED")
         }
     }

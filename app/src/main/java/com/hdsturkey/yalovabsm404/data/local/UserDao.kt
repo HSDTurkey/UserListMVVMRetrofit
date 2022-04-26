@@ -14,13 +14,16 @@ interface UserDao {
     fun getAllOneShot(): List<User>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(user: User)
+    suspend fun insert(user: User)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(user: List<User>)
 
     @Delete
-    fun delete(user: User)
+    suspend fun delete(user: User)
+
+    @Query("DELETE FROM user")
+    suspend fun deleteAll()
 
     @Query("SELECT * FROM user WHERE  name LIKE :name LIMIT 1")
     fun findByName(name: UserName): User

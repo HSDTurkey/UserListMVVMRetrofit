@@ -15,6 +15,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:visibility="gone"
         app:errorEnabled="true"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -36,6 +37,7 @@
         android:layout_gravity="center"
         android:text="OBSERVE DB"
         android:textStyle="bold|italic"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/til_user_id" />
@@ -45,9 +47,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:clipToPadding="true"
-        android:paddingStart="16dp"
-        android:paddingTop="16dp"
-        android:paddingEnd="16dp"
         android:paddingBottom="80dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_user_list"
@@ -65,6 +64,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.9"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/fab_insert_user"
+        app:layout_constraintEnd_toStartOf="@id/fab_insert_user"
+        android:layout_marginStart="32dp"
+        android:text="Delete All"
+        android:id="@+id/btn_delete_all"
+        android:layout_marginEnd="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/fab_insert_user" />
+
+
+    <ProgressBar
+        android:id="@+id/progressbar"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
