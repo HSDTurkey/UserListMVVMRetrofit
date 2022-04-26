@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,11 @@ import com.hdsturkey.yalovabsm404.data.model.User
 import com.hdsturkey.yalovabsm404.data.model.UserName
 import com.hdsturkey.yalovabsm404.data.model.UserPicture
 import com.hdsturkey.yalovabsm404.databinding.FragmentUserListBinding
+import com.hdsturkey.yalovabsm404.utils.NetworkHelper
 import com.hdsturkey.yalovabsm404.utils.toast
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 
 class UserListFragment : Fragment() {
@@ -30,6 +35,26 @@ class UserListFragment : Fragment() {
         insertMockUserListToDatabase()
         setListeners()
         setRecyclerView()
+        fetchUserListFromRemote()
+    }
+
+    private fun fetchUserListFromRemote() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val request = NetworkHelper.getServices().getUserList(10)
+            if (request.isSuccessful) {
+                val userList = request.body()?.results
+                userList?.let { users ->
+                    withContext(Dispatchers.Main) {
+                        updateUserList(users)
+                        toast("count ${users.size}")
+                    }
+                } ?: run {
+                    toast("USER LIST NULL")
+                }
+            } else {
+                toast("Fetching user list failured. ${request.errorBody()}")
+            }
+        }
     }
 
     private fun insertMockUserListToDatabase() {
@@ -48,9 +73,13 @@ class UserListFragment : Fragment() {
         Log.d(TAG, "STARTING TO OBSERVE DATABASE CHANGINATIONS")
         AppDatabase.getInstance().userDao().getAll().observe(viewLifecycleOwner) { list ->
             Log.d(TAG, "New User list (size:${list.size}) has been delivered. Submitting to UI ")
-            userList = list
-            userListAdapter.submitList(list.toMutableList())
+            updateUserList(list)
         }
+    }
+
+    private fun updateUserList(list: List<User>) {
+        userList = list
+        userListAdapter.submitList(list.toMutableList())
     }
 
     private fun setRecyclerView() {
